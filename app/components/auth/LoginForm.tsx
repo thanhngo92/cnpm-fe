@@ -1,11 +1,22 @@
+import { FormEvent, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { Input } from "../ui/input";
+import { useLogin } from "../../hooks/useLogin";
 
 const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { isSubmitting, errorMessage, submitLogin } = useLogin();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    await submitLogin({ email, password });
+  };
+
   return (
     <section className="w-full">
       <Card className="mx-auto w-full max-w-md rounded-lg border border-slate-200/80 bg-white py-6 shadow-[0_20px_70px_rgba(15,23,42,0.1)] backdrop-blur">
@@ -23,14 +34,16 @@ const LoginForm = () => {
             </p>
           </div>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <Input
                 id="email"
                 type="email"
                 placeholder="Email"
-                className="h-10 rounded-none border-slate-200/80"
+                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
                 autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
               />
             </div>
 
@@ -39,8 +52,10 @@ const LoginForm = () => {
                 id="password"
                 type="password"
                 placeholder="Password"
-                className="h-10 rounded-none border-slate-200/80"
+                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
                 autoComplete="current-password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
               />
               <div className="flex justify-end">
                 <Link
@@ -52,13 +67,18 @@ const LoginForm = () => {
               </div>
             </div>
 
+            {errorMessage ? (
+              <p className="text-sm text-red-600">{errorMessage}</p>
+            ) : null}
+
             <Button
-              type="button"
+              type="submit"
               size="lg"
               className="h-10 w-full rounded-none bg-slate-900 text-white hover:bg-slate-800"
+              disabled={isSubmitting}
             >
               <>
-                Login
+                {isSubmitting ? "Logging in..." : "Login"}
                 <ArrowRight className="h-4 w-4" />
               </>
             </Button>

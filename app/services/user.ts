@@ -1,10 +1,46 @@
 import type {
+  AuthResponse,
+  LoginRequest,
+  RegisterRequest,
   FetchUserResponse,
   TypeUser,
 } from "../type/auth";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 const AUTH_TOKEN_KEY = "glowup_token";
+const AUTH_USER_KEY = "glowup_user";
+
+const parseErrorMessage = async (
+  response: Response,
+  fallbackMessage: string
+): Promise<string> => {
+  try {
+    const data = await response.json();
+    if (typeof data?.message === "string" && data.message.trim()) {
+      return data.message;
+    }
+  } catch {
+    // Keep fallback message when response body is not JSON.
+  }
+
+  return fallbackMessage;
+};
+
+export const setAuthToken = (token: string) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.setItem(AUTH_TOKEN_KEY, token);
+};
+
+export const setAuthUser = (user: TypeUser) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
+};
 
 export const getAuthToken = (): string | null => {
   if (typeof window === "undefined") {
@@ -20,6 +56,54 @@ export const clearAuthToken = () => {
   }
 
   window.localStorage.removeItem(AUTH_TOKEN_KEY);
+  window.localStorage.removeItem(AUTH_USER_KEY);
+};
+
+export const loginUser = async (payload: LoginRequest): Promise<TypeUser> => {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const message = await parseErrorMessage(
+      response,
+      "Đăng nhập thất bại, vui lòng thử lại"
+    );
+    throw new Error(message);
+  }
+
+  const data: AuthResponse = await response.json();
+  setAuthToken(data.data.token);
+  setAuthUser(data.data.user);
+
+  return data.data.user;
+};
+
+export const registerUser = async (
+  payload: RegisterRequest
+): Promise<TypeUser> => {
+  const response = await fetch(`${API_BASE_URL}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const message = await parseErrorMessage(
+      response,
+      "Đăng ký thất bại, vui lòng thử lại"
+    );
+    throw new Error(message);
+  }
+
+  const data: AuthResponse = await response.json();
+  return data.data.user;
 };
 
 export const fetchUser = async (): Promise<TypeUser> => {
@@ -39,7 +123,11 @@ export const fetchUser = async (): Promise<TypeUser> => {
     if (response.status === 401) {
       clearAuthToken();
     }
-    throw new Error("Failed to fetch user");
+    const message = await parseErrorMessage(
+      response,
+      "Không thể lấy thông tin người dùng"
+    );
+    throw new Error(message);
   }
 
   const data: FetchUserResponse = await response.json();
@@ -61,6 +149,7 @@ export const logoutUser = async () => {
   clearAuthToken();
 
   if (!response.ok) {
-    throw new Error("Failed to logout");
+    const message = await parseErrorMessage(response, "Không thể đăng xuất");
+    throw new Error(message);
   }
 };
