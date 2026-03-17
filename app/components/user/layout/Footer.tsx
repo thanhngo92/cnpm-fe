@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router";
-import { Sparkles } from "lucide-react";
+import { Sparkles, MapPin, Phone, Mail } from "lucide-react";
 
 export default function Footer() {
   const { pathname } = useLocation();
@@ -11,97 +11,104 @@ export default function Footer() {
         isCheckoutRoute ? "mt-0" : "mt-20"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-6 py-10 md:py-12 grid md:grid-cols-3 gap-6 md:gap-8">
         {/* Brand */}
         <div>
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-3">
             <Sparkles className="text-pink-500" size={22} />
             <span className="text-white font-semibold text-lg">
               Glow<span className="text-pink-500">Up</span>
             </span>
           </div>
 
-          <p className="text-sm leading-relaxed text-slate-400">
-            Đánh thức vẻ đẹp tự nhiên của bạn với các sản phẩm mỹ phẩm chính
-            hãng, chất lượng cao.
+          <p className="text-sm leading-6 text-slate-400 mb-3">
+            Nền tảng mua sắm mỹ phẩm chính hãng, an toàn và tiện lợi.
           </p>
+
+          <div className="space-y-1.5 text-sm text-slate-400">
+            <div className="flex items-start gap-2">
+              <MapPin size={16} className="mt-0.5 text-pink-500" />
+              <span>12 Nguyễn Văn Bảo, Gò Vấp, TP. Hồ Chí Minh</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Phone size={16} className="text-pink-500" />
+              <span>1900 1234</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Mail size={16} className="text-pink-500" />
+              <span>support@glowup.vn</span>
+            </div>
+          </div>
         </div>
 
-        {/* Category */}
+        {/* Quick links */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Danh mục</h4>
+          <h4 className="text-white font-semibold mb-3">Liên kết nhanh</h4>
 
           <ul className="space-y-2 text-sm">
             <li>
-              <Link to="/glowup/products" className="hover:text-white">
-                Trang điểm
+              <Link to="/glowup" className="hover:text-white transition-colors">
+                Trang chủ
               </Link>
             </li>
 
             <li>
-              <Link to="/glowup/products" className="hover:text-white">
-                Chăm sóc da
+              <Link
+                to="/glowup/products"
+                className="hover:text-white transition-colors"
+              >
+                Sản phẩm
               </Link>
             </li>
 
             <li>
-              <Link to="/glowup/products" className="hover:text-white">
-                Nước hoa
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/glowup/promotion" className="hover:text-white">
+              <Link
+                to="/glowup/promotion"
+                className="hover:text-white transition-colors"
+              >
                 Khuyến mãi
               </Link>
             </li>
+
+            <li>
+              <Link
+                to="/glowup/cart"
+                className="hover:text-white transition-colors"
+              >
+                Giỏ hàng
+              </Link>
+            </li>
           </ul>
         </div>
 
-        {/* Support */}
+        {/* Policies / support */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Hỗ trợ</h4>
+          <h4 className="text-white font-semibold mb-3">Hỗ trợ khách hàng</h4>
 
           <ul className="space-y-2 text-sm">
-            <li className="hover:text-white cursor-pointer">
+            <li className="hover:text-white transition-colors cursor-pointer">
               Chính sách đổi trả
             </li>
 
-            <li className="hover:text-white cursor-pointer">
+            <li className="hover:text-white transition-colors cursor-pointer">
+              Chính sách bảo mật
+            </li>
+
+            <li className="hover:text-white transition-colors cursor-pointer">
+              Điều khoản sử dụng
+            </li>
+
+            <li className="hover:text-white transition-colors cursor-pointer">
               Hướng dẫn mua hàng
             </li>
-
-            <li className="hover:text-white cursor-pointer">
-              Theo dõi đơn hàng
-            </li>
-
-            <li className="hover:text-white cursor-pointer">Liên hệ</li>
           </ul>
-        </div>
-
-        {/* Newsletter */}
-        <div>
-          <h4 className="text-white font-semibold mb-4">Đăng ký nhận tin</h4>
-
-          <p className="text-sm text-slate-400 mb-4">
-            Nhận ngay voucher 50K cho đơn hàng đầu tiên.
-          </p>
-
-          <div className="flex gap-2">
-            <input
-              placeholder="Email của bạn"
-              className="flex-1 px-4 py-2 rounded-md bg-slate-800 border border-slate-700 text-sm outline-none"
-            />
-
-            <button className="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded-md text-white text-sm">
-              Gửi
-            </button>
-          </div>
         </div>
       </div>
 
       {/* bottom */}
-      <div className="border-t border-slate-700 text-center text-sm text-slate-400 py-6">
+      <div className="border-t border-slate-700 text-center text-sm text-slate-400 py-4 px-6">
         © 2026 GlowUp Cosmetics. All rights reserved. • Made with by Trung Thanh
         Long
       </div>

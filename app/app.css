@@ -158,6 +158,12 @@ body {
 :root {
   --primary-foreground: white;
   --radius: 0.625rem;
+  --ui-page-from: #fff8fb;
+  --ui-page-via: #fffdfd;
+  --ui-page-to: #ffffff;
+  --ui-surface: #ffffff;
+  --ui-surface-soft: #fff5fa;
+  --ui-surface-muted: #fffbfd;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -192,6 +198,12 @@ body {
 }
 
 .dark {
+  --ui-page-from: #17161a;
+  --ui-page-via: #16171a;
+  --ui-page-to: #15161a;
+  --ui-surface: #1b1c20;
+  --ui-surface-soft: #212228;
+  --ui-surface-muted: #25262d;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -236,6 +248,27 @@ body {
 
 /* Landing Page Custom Styles */
 @layer utilities {
+  .bg-ui-page {
+    background-image: linear-gradient(
+      180deg,
+      var(--ui-page-from) 0%,
+      var(--ui-page-via) 48%,
+      var(--ui-page-to) 100%
+    );
+  }
+
+  .bg-ui-surface {
+    background-color: var(--ui-surface);
+  }
+
+  .bg-ui-surface-soft {
+    background-color: var(--ui-surface-soft);
+  }
+
+  .bg-ui-surface-muted {
+    background-color: var(--ui-surface-muted);
+  }
+
   .bg-grid-pattern {
     background-image:
       linear-gradient(to right, oklch(1 0 0 / 5%) 1px, transparent 1px),

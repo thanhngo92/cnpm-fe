@@ -34,7 +34,7 @@ export default function CartSummary({ items }: CartSummaryProps) {
   const total = subtotal - discount + shipping;
 
   return (
-    <div className="border border-slate-200 rounded-xl p-6 bg-white w-full h-fit max-w-95">
+    <div className="h-fit w-full max-w-95 bg-white p-6 shadow-[0_14px_30px_rgba(15,23,42,0.08)]">
       {/* Title */}
       <h2 className="text-xl font-bold text-slate-900 mb-6">Tổng đơn hàng</h2>
 
@@ -55,13 +55,12 @@ export default function CartSummary({ items }: CartSummaryProps) {
               h-11
               pl-9
               pr-3
-              border border-slate-200
-              rounded-lg
               text-sm
               text-slate-700
-              bg-white
+              bg-slate-100
               outline-none
-              focus:border-pink-500
+              focus:ring-2
+              focus:ring-pink-200
             "
           />
         </div>
@@ -71,7 +70,6 @@ export default function CartSummary({ items }: CartSummaryProps) {
           className="
             h-11
             px-5
-            rounded-lg
             bg-pink-600
             hover:bg-pink-700
             text-white
@@ -85,7 +83,7 @@ export default function CartSummary({ items }: CartSummaryProps) {
       </div>
 
       {/* Divider */}
-      <div className="border-b border-slate-200 mb-5"></div>
+      <div className="mb-5 h-px bg-slate-200"></div>
 
       {/* Subtotal */}
       <div className="flex justify-between items-center text-sm mb-4">
@@ -114,7 +112,7 @@ export default function CartSummary({ items }: CartSummaryProps) {
       )}
 
       {/* Divider */}
-      <div className="border-b border-slate-200 mb-5"></div>
+      <div className="mb-5 h-px bg-slate-200"></div>
 
       {/* Total */}
       <div className="flex justify-between items-center mb-6">
@@ -136,7 +134,6 @@ export default function CartSummary({ items }: CartSummaryProps) {
           text-white
           text-base
           font-semibold
-          rounded-xl
         "
       >
         Thanh toán

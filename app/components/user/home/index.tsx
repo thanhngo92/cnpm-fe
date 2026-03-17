@@ -1,99 +1,57 @@
-import { ArrowRight, Star } from "lucide-react";
+import { useMemo, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
+import { useCart } from "../../../context/CartContext";
+import { categoryData } from "../../../data/category";
+import { homeCategoryHighlights } from "../../../data/home";
+import { productData } from "../../../data/product";
+import type { Product } from "../../../type/product";
+import ProductCard from "../products/ProductCard";
+import ProductDetailModal from "../products/ProductDetailModal";
 
 export default function HomePage() {
   const productsPath = "/glowup/products";
   const promotionPath = "/glowup/promotion";
+  const { addItem } = useCart();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const categories = [
-    {
-      name: "Trang điểm",
-      icon: "💄",
-      color: "bg-rose-100 text-rose-600",
-      link: productsPath,
-    },
-    {
-      name: "Dưỡng da",
-      icon: "✨",
-      color: "bg-blue-100 text-blue-600",
-      link: productsPath,
-    },
-    {
-      name: "Nước hoa",
-      icon: "🌸",
-      color: "bg-purple-100 text-purple-600",
-      link: productsPath,
-    },
-    {
-      name: "Khuyến mãi",
-      icon: "🎁",
-      color: "bg-amber-100 text-amber-600",
-      link: promotionPath,
-    },
-    {
-      name: "Làm sạch",
-      icon: "💧",
-      color: "bg-emerald-100 text-emerald-600",
-      link: productsPath,
-    },
-    {
-      name: "Phụ kiện",
-      icon: "🎀",
-      color: "bg-pink-100 text-pink-600",
-      link: productsPath,
-    },
-  ];
+  const trendingProducts = productData.slice(0, 4);
+  const categoryNameById = useMemo(
+    () =>
+      categoryData.reduce<Record<string, string>>((accumulator, category) => {
+        accumulator[category.id] = category.name;
+        return accumulator;
+      }, {}),
+    []
+  );
 
-  const trendingProducts = [
-    {
-      id: 1,
-      name: "Son lì cao cấp",
-      image: "💄",
-      price: "320.000đ",
-      oldPrice: "390.000đ",
-      rating: 4.9,
-      reviews: 128,
-      badge: "Hot",
-    },
-    {
-      id: 2,
-      name: "Serum dưỡng sáng da",
-      image: "✨",
-      price: "540.000đ",
-      oldPrice: "620.000đ",
-      rating: 4.8,
-      reviews: 96,
-      badge: "Best Seller",
-    },
-    {
-      id: 3,
-      name: "Nước hoa nữ thanh lịch",
-      image: "🌸",
-      price: "890.000đ",
-      oldPrice: null,
-      rating: 4.7,
-      reviews: 73,
-      badge: "New",
-    },
-    {
-      id: 4,
-      name: "Kem dưỡng phục hồi",
-      image: "🧴",
-      price: "460.000đ",
-      oldPrice: "520.000đ",
-      rating: 4.9,
-      reviews: 141,
-      badge: "Sale",
-    },
-  ];
+  const selectedCategoryName = selectedProduct
+    ? categoryNameById[selectedProduct.categoryId] || "Danh mục khác"
+    : "";
+
+  const handleAddToCart = (product: Product) => {
+    if (product.stock <= 0) {
+      return;
+    }
+
+    addItem(
+      {
+        id: product.id,
+        name: product.name,
+        price: Math.round(product.price),
+        image: product.imageUrl,
+      },
+      1
+    );
+  };
 
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-pink-50 to-rose-100 overflow-hidden">
+      <section className="relative bg-linear-to-r from-pink-50 to-rose-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 flex flex-col-reverse lg:flex-row items-center gap-12">
           <div className="flex-1 text-center lg:text-left z-10">
-            <span className="inline-block py-1 px-3 rounded-full bg-pink-200 text-pink-700 text-sm font-semibold mb-6">
+            <span className="inline-block bg-pink-200 px-3 py-1 text-sm font-semibold text-pink-700 mb-6">
               Bộ sưu tập Mùa Hè 2026
             </span>
 
@@ -110,14 +68,14 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
                 to={productsPath}
-                className="bg-slate-900 hover:bg-pink-600 text-white px-8 py-4 rounded-full font-medium text-lg transition-colors flex items-center justify-center gap-2"
+                className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 font-medium text-lg transition-colors flex items-center justify-center gap-2"
               >
                 Mua sắm ngay <ArrowRight size={20} />
               </Link>
 
               <Link
                 to={promotionPath}
-                className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-200 px-8 py-4 rounded-full font-medium text-lg transition-colors flex items-center justify-center"
+                className="bg-white hover:bg-slate-50 text-slate-900 px-8 py-4 font-medium text-lg transition-colors flex items-center justify-center"
               >
                 Xem khuyến mãi
               </Link>
@@ -126,18 +84,18 @@ export default function HomePage() {
 
           <div className="flex-1 relative">
             <div className="relative w-72 h-72 md:w-96 md:h-96 mx-auto">
-              <div className="absolute inset-0 bg-pink-300 rounded-full blur-xl opacity-70"></div>
-              <div className="absolute inset-0 bg-rose-300 rounded-full blur-xl opacity-70 translate-x-10"></div>
-              <div className="absolute inset-0 bg-purple-300 rounded-full blur-xl opacity-70 translate-y-10"></div>
+              <div className="absolute inset-0 bg-pink-300 blur-xl opacity-70"></div>
+              <div className="absolute inset-0 bg-rose-300 blur-xl opacity-70 translate-x-10"></div>
+              <div className="absolute inset-0 bg-purple-300 blur-xl opacity-70 translate-y-10"></div>
 
-              <div className="absolute inset-4 bg-white rounded-full shadow-2xl flex items-center justify-center text-8xl z-10 border-8 border-white">
+              <div className="absolute inset-4 bg-white shadow-2xl flex items-center justify-center text-8xl z-10">
                 ✨
               </div>
 
-              <div className="absolute -top-6 -left-6 w-24 h-24 bg-white rounded-2xl shadow-xl flex items-center justify-center text-4xl z-20 rotate-12">
+              <div className="absolute -top-6 -left-6 w-24 h-24 bg-white shadow-xl flex items-center justify-center text-4xl z-20 rotate-12">
                 💄
               </div>
-              <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-white rounded-full shadow-xl flex items-center justify-center text-5xl z-20 -rotate-12">
+              <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-white shadow-xl flex items-center justify-center text-5xl z-20 -rotate-12">
                 🧴
               </div>
             </div>
@@ -146,32 +104,46 @@ export default function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4 font-serif">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 font-serif">
               Khám phá danh mục
             </h2>
-            <p className="text-slate-500">
-              Tìm kiếm sản phẩm phù hợp với nhu cầu của bạn
+            <p className="text-slate-500 max-w-2xl mx-auto text-lg">
+              Lựa chọn những sản phẩm phù hợp nhất để chăm sóc và tôn vinh vẻ
+              đẹp của bạn
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {categories.map((cat, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {homeCategoryHighlights.map((cat) => (
               <Link
-                key={idx}
+                key={cat.id}
                 to={cat.link}
-                className="flex flex-col items-center group"
+                className="group relative overflow-hidden aspect-4/5 flex flex-col justify-end"
               >
-                <div
-                  className={`w-24 h-24 rounded-full ${cat.color} flex items-center justify-center text-4xl mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm`}
-                >
-                  {cat.icon}
+                <div className="absolute inset-0">
+                  <img
+                    src={cat.imageUrl}
+                    alt={cat.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
                 </div>
-                <span className="font-medium text-slate-900 group-hover:text-pink-600 transition-colors">
-                  {cat.name}
-                </span>
+
+                <div className="relative z-10 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  <h3 className="text-3xl font-serif font-bold mb-2">
+                    {cat.name}
+                  </h3>
+                  <p className="text-white/80 mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                    {cat.description}
+                  </p>
+                  <div className="inline-flex items-center gap-2 font-medium text-sm tracking-wider uppercase pb-1 transition-colors">
+                    Khám phá <ArrowRight size={16} />
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
@@ -201,58 +173,31 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {trendingProducts.map((product) => (
-              <div
+              <ProductCard
                 key={product.id}
-                className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-shadow group border border-slate-100 flex flex-col h-full"
-              >
-                <div className="relative h-64 bg-slate-50 rounded-xl mb-4 flex items-center justify-center text-6xl overflow-hidden shrink-0">
-                  {product.badge && (
-                    <span className="absolute top-3 left-3 bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
-                      {product.badge}
-                    </span>
-                  )}
-                  <div className="group-hover:scale-110 transition-transform duration-500">
-                    {product.image}
-                  </div>
-                </div>
-
-                <div className="flex flex-col flex-1">
-                  <div className="flex items-center gap-1 mb-2">
-                    <Star size={14} className="fill-amber-400 text-amber-400" />
-                    <span className="text-sm font-medium text-slate-700">
-                      {product.rating}
-                    </span>
-                    <span className="text-sm text-slate-400">
-                      ({product.reviews})
-                    </span>
-                  </div>
-
-                  <h3 className="font-semibold text-slate-900 mb-1 line-clamp-2 hover:text-pink-600 transition-colors flex-1">
-                    {product.name}
-                  </h3>
-
-                  <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <div>
-                      <p className="font-bold text-slate-900">
-                        {product.price}
-                      </p>
-                      {product.oldPrice && (
-                        <p className="text-sm text-slate-400 line-through">
-                          {product.oldPrice}
-                        </p>
-                      )}
-                    </div>
-
-                    <button className="bg-slate-900 hover:bg-pink-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors">
-                      Thêm
-                    </button>
-                  </div>
-                </div>
-              </div>
+                product={product}
+                categoryName={
+                  categoryNameById[product.categoryId] || "Danh mục khác"
+                }
+                onViewDetail={setSelectedProduct}
+                onAddToCart={handleAddToCart}
+              />
             ))}
           </div>
         </div>
       </section>
+
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          categoryName={selectedCategoryName}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={() => {
+            handleAddToCart(selectedProduct);
+            setSelectedProduct(null);
+          }}
+        />
+      )}
     </div>
   );
 }

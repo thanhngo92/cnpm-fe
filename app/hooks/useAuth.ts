@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
-import { fetchUser, getAuthToken } from "../services/user";
+import { getAuthToken, getUser } from "../services/user";
 import type { TypeUser } from "../type/auth";
 
 export const useAuth = () => {
@@ -32,7 +32,7 @@ export const useAuth = () => {
 
     const loadUser = async () => {
       try {
-        const data = await fetchUser();
+        const data = await getUser();
         setUser(data);
         setIsError(false);
       } catch {

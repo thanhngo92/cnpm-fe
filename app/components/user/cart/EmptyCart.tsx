@@ -16,7 +16,7 @@ export default function EmptyCart() {
 
       <Link
         to="/glowup/products"
-        className="bg-pink-600 text-white px-6 py-3 rounded-full hover:bg-pink-700 transition-colors flex items-center justify-center gap-2"
+        className="flex items-center justify-center gap-2 bg-pink-600 px-6 py-3 text-white transition-colors hover:bg-pink-700"
       >
         Tiếp tục mua sắm
         <ArrowRightIcon className="w-4 h-4 mt-1" />

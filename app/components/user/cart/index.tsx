@@ -12,7 +12,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="mx-auto max-w-7xl px-4 py-12">
       <h1 className="text-3xl font-bold text-slate-900 mb-10">
         Giỏ hàng của bạn
       </h1>

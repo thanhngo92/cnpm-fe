@@ -28,7 +28,7 @@ export default function Topbar() {
   ];
 
   return (
-    <div className="bg-pink-50">
+    <div className="bg-transparent">
       <div className="max-w-7xl mx-auto px-4 pt-8 pb-8">
         {backLink && (
           <Link
@@ -51,7 +51,7 @@ export default function Topbar() {
               <div key={item.id} className="flex items-center">
                 <div className="flex flex-col items-center min-w-30">
                   <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold transition-colors ${
+                    className={`flex h-9 w-9 items-center justify-center text-sm font-semibold transition-colors ${
                       active
                         ? "bg-pink-600 text-white"
                         : "bg-slate-200 text-slate-500"

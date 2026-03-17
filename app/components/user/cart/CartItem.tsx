@@ -1,10 +1,10 @@
 import { Minus, Plus, Trash2 } from "lucide-react";
-import type { CartItem as CartItemType } from "../../data/user/cartData";
+import type { CartItem as CartItemType } from "../../../data/cart";
 
 interface CartItemProps {
   item: CartItemType;
-  onQuantityChange: (id: number, delta: number) => void;
-  onRemove: (id: number) => void;
+  onQuantityChange: (id: number | string, delta: number) => void;
+  onRemove: (id: number | string) => void;
 }
 
 export default function CartItem({
@@ -12,11 +12,23 @@ export default function CartItem({
   onQuantityChange,
   onRemove,
 }: CartItemProps) {
+  const isImageUrl =
+    item.image.startsWith("http") || item.image.startsWith("/");
+
   return (
-    <div className="flex items-center gap-4 border border-slate-200 rounded-xl p-4 bg-white">
+    <div className="flex items-center gap-4 bg-white p-4 shadow-[0_10px_22px_rgba(15,23,42,0.06)]">
       {/* Image */}
-      <div className="w-20 h-20 bg-slate-100 rounded-lg flex items-center justify-center text-3xl">
-        {item.image}
+      <div className="flex h-20 w-20 items-center justify-center bg-slate-100 text-3xl">
+        {isImageUrl ? (
+          <img
+            src={item.image}
+            alt={item.name}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          item.image
+        )}
       </div>
 
       {/* Info */}
@@ -29,9 +41,9 @@ export default function CartItem({
       </div>
 
       {/* Quantity */}
-      <div className="flex items-center border border-slate-200 rounded-lg overflow-hidden">
+      <div className="flex items-center bg-slate-100">
         <button
-          className="px-3 py-2 hover:bg-slate-100"
+          className="px-3 py-2 transition-colors hover:bg-slate-200"
           onClick={() => onQuantityChange(item.id, -1)}
         >
           <Minus size={16} />
@@ -40,7 +52,7 @@ export default function CartItem({
         <span className="px-4">{item.quantity}</span>
 
         <button
-          className="px-3 py-2 hover:bg-slate-100"
+          className="px-3 py-2 transition-colors hover:bg-slate-200"
           onClick={() => onQuantityChange(item.id, 1)}
         >
           <Plus size={16} />

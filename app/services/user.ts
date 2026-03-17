@@ -134,6 +134,10 @@ export const fetchUser = async (): Promise<TypeUser> => {
   return data.data;
 };
 
+export const getUser = async (): Promise<TypeUser> => {
+  return fetchUser();
+};
+
 export const logoutUser = async () => {
   const token = getAuthToken();
 
@@ -153,3 +157,4 @@ export const logoutUser = async () => {
     throw new Error(message);
   }
 };
+
