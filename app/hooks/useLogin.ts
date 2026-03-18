@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import { loginUser } from "../services/user";
 
@@ -10,6 +10,7 @@ type LoginPayload = {
 
 export const useLogin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -30,7 +31,12 @@ export const useLogin = () => {
         password,
       });
 
-      navigate("/glowup", { replace: true });
+      const nextPath =
+        typeof (location.state as { from?: unknown } | null)?.from === "string"
+          ? (location.state as { from: string }).from
+          : "/glowup";
+
+      navigate(nextPath, { replace: true });
       return true;
     } catch (error) {
       const message =

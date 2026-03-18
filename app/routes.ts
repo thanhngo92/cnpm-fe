@@ -4,25 +4,23 @@ export default [
   index("./routes/index.tsx"),
 
   // Auth
-    layout("./components/auth/AuthLayout.tsx", [
-      route("glowup/login", "./routes/auth/login.tsx"),
-      route("glowup/register", "./routes/auth/register.tsx"),
-      route("glowup/forgot-password", "./routes/auth/forgot-password.tsx"),
+  layout("./components/auth/AuthLayout.tsx", [
+    route("glowup/login", "./routes/login.tsx"),
+    route("glowup/register", "./routes/register.tsx"),
+    route("glowup/forgot-password", "./routes/forgot-password.tsx"),
   ]),
 
   // User
-  layout("./components/auth/RequireAuthLayout.tsx", [
-    layout("./components/user/layout/MainLayout.tsx", [
-      route("glowup", "./routes/user/home.tsx"),
-      route("glowup/products", "./routes/user/product.tsx"),
-      route("glowup/promotion", "./routes/user/promotion.tsx"),
-      route("glowup/cart", "./routes/user/cart.tsx"),
-      layout("./components/user/checkout/layout/CheckoutLayout.tsx", [
-        route("glowup/checkout", "./routes/user/checkout/shipping.tsx"),
-        route("glowup/checkout/payment", "./routes/user/checkout/payment.tsx"),
-        route("glowup/checkout/qr-payment", "./routes/user/checkout/qr-payment.tsx"),
-        route("glowup/checkout/complete", "./routes/user/checkout/complete.tsx"),
-      ]),
+  layout("./components/layout/MainLayout.tsx", [
+    route("glowup", "./routes/home.tsx"),
+    route("glowup/products", "./routes/product.tsx"),
+    route("glowup/promotion", "./routes/promotion.tsx"),
+    route("glowup/cart", "./routes/cart.tsx"),
+    layout("./components/checkout/layout/CheckoutLayout.tsx", [
+      route("glowup/checkout", "./routes/shipping.tsx"),
+      route("glowup/checkout/payment", "./routes/payment.tsx"),
+      route("glowup/checkout/qr-payment", "./routes/qr-payment.tsx"),
+      route("glowup/checkout/complete", "./routes/complete.tsx"),
     ]),
   ]),
 

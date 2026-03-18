@@ -8,38 +8,27 @@ export interface CartItem {
 
 export const cartItems: CartItem[] = [
   {
-    id: 1,
-    name: "Son lì cao cấp",
-    price: 320000,
+    id: "prd-cetaphil-cleanser",
+    name: "Cetaphil Gentle Skin Cleanser 500ml",
+    price: 369000,
     quantity: 1,
-    image: "💄",
+    image:
+      "https://images.unsplash.com/photo-1556228578-dd6f3a79f5f0?auto=format&fit=crop&w=400&q=80",
   },
   {
-    id: 2,
-    name: "Serum dưỡng da",
-    price: 540000,
+    id: "prd-loreal-hyaluron-serum",
+    name: "L'Oreal Revitalift Hyaluron Serum 30ml",
+    price: 379000,
     quantity: 2,
-    image: "✨",
+    image:
+      "https://images.unsplash.com/photo-1601612628452-9e99ced43524?auto=format&fit=crop&w=400&q=80",
   },
-    {
-    id: 3,
-    name: "Son lì cao cấp 22",
-    price: 320000,
+  {
+    id: "prd-3ce-velvet-lip-tint",
+    name: "3CE Velvet Lip Tint",
+    price: 329000,
     quantity: 1,
-    image: "💄",
+    image:
+      "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=400&q=80",
   },
-  //   {
-  //   id: 4,
-  //   name: "Son lì cao cấp 3212",
-  //   price: 320000,
-  //   quantity: 1,
-  //   image: "💄",
-  // },
-  //   {
-  //   id: 5,
-  //   name: "Son lì cao cấp 321",
-  //   price: 320000,
-  //   quantity: 1,
-  //   image: "💄",
-  // },
 ];

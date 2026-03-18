@@ -29,7 +29,7 @@ const RegisterForm = () => {
 
   return (
     <section className="w-full">
-      <Card className="mx-auto w-full max-w-md rounded-lg border border-slate-200/80 bg-white py-6 shadow-[0_20px_70px_rgba(15,23,42,0.1)] backdrop-blur">
+      <Card className="mx-auto w-full max-w-md border-rose-100 bg-linear-to-b from-white to-rose-50/40 py-6 shadow-(--ui-shadow-card)">
         <CardContent className="px-6 sm:px-7">
           <div className="mb-5 text-center">
             <Link to="/glowup" className="inline-flex justify-center">
@@ -50,7 +50,7 @@ const RegisterForm = () => {
                 id="fullName"
                 type="text"
                 placeholder="Full Name"
-                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
+                className="h-10 rounded-none! border-rose-100 transition-colors focus-visible:border-rose-300 focus-visible:ring-rose-200/60"
                 autoComplete="name"
                 value={fullName}
                 onChange={(event) => setFullName(event.target.value)}
@@ -62,7 +62,7 @@ const RegisterForm = () => {
                 id="register-email"
                 type="email"
                 placeholder="Email"
-                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
+                className="h-10 rounded-none! border-rose-100 transition-colors focus-visible:border-rose-300 focus-visible:ring-rose-200/60"
                 autoComplete="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
@@ -74,7 +74,7 @@ const RegisterForm = () => {
                 id="phone-number"
                 type="tel"
                 placeholder="Phone Number"
-                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
+                className="h-10 rounded-none! border-rose-100 transition-colors focus-visible:border-rose-300 focus-visible:ring-rose-200/60"
                 autoComplete="tel"
                 value={phoneNumber}
                 onChange={(event) => setPhoneNumber(event.target.value)}
@@ -86,7 +86,7 @@ const RegisterForm = () => {
                 id="register-password"
                 type="password"
                 placeholder="Password"
-                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
+                className="h-10 rounded-none! border-rose-100 transition-colors focus-visible:border-rose-300 focus-visible:ring-rose-200/60"
                 autoComplete="new-password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
@@ -98,7 +98,7 @@ const RegisterForm = () => {
                 id="confirm-password"
                 type="password"
                 placeholder="Confirm Password"
-                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
+                className="h-10 rounded-none! border-rose-100 transition-colors focus-visible:border-rose-300 focus-visible:ring-rose-200/60"
                 autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
@@ -112,7 +112,7 @@ const RegisterForm = () => {
             <Button
               type="submit"
               size="lg"
-              className="h-10 w-full rounded-none bg-slate-900 text-white hover:bg-slate-800"
+              className="h-10 w-full rounded-none! bg-rose-600 text-white hover:bg-rose-700"
               disabled={isSubmitting}
             >
               <>
@@ -125,7 +125,7 @@ const RegisterForm = () => {
               Already have an account?{" "}
               <Link
                 to="/glowup/login"
-                className="font-semibold text-pink-600 transition-colors hover:text-pink-700"
+                className="font-semibold text-rose-600 transition-colors hover:text-rose-700"
               >
                 Login
               </Link>

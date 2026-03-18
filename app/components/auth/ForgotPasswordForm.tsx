@@ -8,7 +8,7 @@ import { Input } from "../ui/input";
 const ForgotPasswordForm = () => {
   return (
     <section className="w-full">
-      <Card className="mx-auto w-full max-w-md rounded-lg border border-slate-200/80 bg-white py-6 shadow-[0_20px_70px_rgba(15,23,42,0.1)] backdrop-blur">
+      <Card className="mx-auto w-full max-w-md border-rose-100 bg-linear-to-b from-white to-rose-50/40 py-6 shadow-(--ui-shadow-card)">
         <CardContent className="px-6 sm:px-7">
           <div className="mb-5 text-center">
             <Link to="/glowup" className="inline-flex justify-center">
@@ -29,7 +29,7 @@ const ForgotPasswordForm = () => {
                 id="forgot-email"
                 type="email"
                 placeholder="Email"
-                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
+                className="h-10 rounded-none! border-rose-100 transition-colors focus-visible:border-rose-300 focus-visible:ring-rose-200/60"
                 autoComplete="email"
               />
             </div>
@@ -37,7 +37,7 @@ const ForgotPasswordForm = () => {
             <Button
               type="button"
               size="lg"
-              className="h-10 w-full rounded-none bg-slate-900 text-white hover:bg-slate-800"
+              className="h-10 w-full rounded-none! bg-rose-600 text-white hover:bg-rose-700"
             >
               <>
                 Send Reset Link
@@ -49,7 +49,7 @@ const ForgotPasswordForm = () => {
               Remember your password?{" "}
               <Link
                 to="/glowup/login"
-                className="font-semibold text-pink-600 transition-colors hover:text-pink-700"
+                className="font-semibold text-rose-600 transition-colors hover:text-rose-700"
               >
                 Login
               </Link>

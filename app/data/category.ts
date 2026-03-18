@@ -3,28 +3,28 @@ import type { Category } from "../type/category";
 export const categoryData: Category[] = [
   {
     id: "cat-skincare",
-    name: "Skincare",
-    description: "Duong da hang ngay",
+    name: "Chăm sóc da",
+    description: "Routine dưỡng da cho mọi loại da",
     imageUrl:
-      "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80",
     createdAt: "2026-03-17T00:00:00.000Z",
     updatedAt: "2026-03-17T00:00:00.000Z",
   },
   {
     id: "cat-makeup",
-    name: "Makeup",
-    description: "Trang diem tu nhien",
+    name: "Trang điểm",
+    description: "Makeup look tự nhiên đến sang trọng",
     imageUrl:
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=900&q=80",
     createdAt: "2026-03-17T00:00:00.000Z",
     updatedAt: "2026-03-17T00:00:00.000Z",
   },
   {
     id: "cat-body",
-    name: "Body Care",
-    description: "Cham soc co the",
+    name: "Chăm sóc cơ thể",
+    description: "Dưỡng âm và phục hồi da cơ thể",
     imageUrl:
-      "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0c?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=900&q=80",
     createdAt: "2026-03-17T00:00:00.000Z",
     updatedAt: "2026-03-17T00:00:00.000Z",
   },

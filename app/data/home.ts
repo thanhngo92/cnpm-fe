@@ -10,25 +10,25 @@ export const homeCategoryHighlights: HomeCategoryHighlight[] = [
   {
     id: "cat-makeup",
     name: "Trang điểm",
-    description: "Tôn vinh nét đẹp tự nhiên",
+    description: "Tong hop son, cushion, nen va bang mau dang ban chay",
     imageUrl:
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=900&q=80",
     link: "/glowup/products",
   },
   {
     id: "cat-skincare",
     name: "Dưỡng da",
-    description: "Nuôi dưỡng từ sâu bên trong",
+    description: "Duong am, phuc hoi, chong lao hoa cho da khoe moi ngay",
     imageUrl:
-      "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80",
     link: "/glowup/products",
   },
   {
     id: "cat-body",
     name: "Chăm sóc cơ thể",
-    description: "Duy trì làn da mềm mịn mỗi ngày",
+    description: "Tam, duong, tay te bao chet cho lan da mem min va deu mau",
     imageUrl:
-      "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0c?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=900&q=80",
     link: "/glowup/products",
   },
 ];

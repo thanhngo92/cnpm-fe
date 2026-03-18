@@ -19,7 +19,7 @@ const LoginForm = () => {
 
   return (
     <section className="w-full">
-      <Card className="mx-auto w-full max-w-md rounded-lg border border-slate-200/80 bg-white py-6 shadow-[0_20px_70px_rgba(15,23,42,0.1)] backdrop-blur">
+      <Card className="mx-auto w-full max-w-md border-rose-100 bg-linear-to-b from-white to-rose-50/40 py-6 shadow-(--ui-shadow-card)">
         <CardContent className="px-6 sm:px-7">
           <div className="mb-5 text-center">
             <Link to="/glowup" className="inline-flex justify-center">
@@ -40,7 +40,7 @@ const LoginForm = () => {
                 id="email"
                 type="email"
                 placeholder="Email"
-                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
+                className="h-10 rounded-none! border-rose-100 transition-colors focus-visible:border-rose-300 focus-visible:ring-rose-200/60"
                 autoComplete="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
@@ -52,7 +52,7 @@ const LoginForm = () => {
                 id="password"
                 type="password"
                 placeholder="Password"
-                className="h-10 rounded-none border-pink-200/70 transition-colors focus-visible:border-pink-400 focus-visible:ring-pink-200/70"
+                className="h-10 rounded-none! border-rose-100 transition-colors focus-visible:border-rose-300 focus-visible:ring-rose-200/60"
                 autoComplete="current-password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
@@ -60,7 +60,7 @@ const LoginForm = () => {
               <div className="flex justify-end">
                 <Link
                   to="/glowup/forgot-password"
-                  className="text-sm font-medium text-pink-600 transition-colors hover:text-pink-700"
+                  className="text-sm font-medium text-rose-600 transition-colors hover:text-rose-700"
                 >
                   Forgot password?
                 </Link>
@@ -74,7 +74,7 @@ const LoginForm = () => {
             <Button
               type="submit"
               size="lg"
-              className="h-10 w-full rounded-none bg-slate-900 text-white hover:bg-slate-800"
+              className="h-10 w-full rounded-none! bg-rose-600 text-white hover:bg-rose-700"
               disabled={isSubmitting}
             >
               <>
@@ -87,7 +87,7 @@ const LoginForm = () => {
               Don't have an account?{" "}
               <Link
                 to="/glowup/register"
-                className="font-semibold text-pink-600 transition-colors hover:text-pink-700"
+                className="font-semibold text-rose-600 transition-colors hover:text-rose-700"
               >
                 Register
               </Link>

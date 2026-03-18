@@ -13,7 +13,7 @@ export const paymentLabels: Record<PaymentMethod, string> = {
 };
 
 export const paymentProviderLabels: Record<Exclude<PaymentMethod, "cod">, string> = {
-  ewallet: "MoMo / ZaloPay",
-  bank: "Vietcombank QRPay",
-  qr: "VNPAY-QR",
+  ewallet: "MoMo / ZaloPay / ShopeePay",
+  bank: "Vietcombank / Techcombank",
+  qr: "VNPAY-QR / Napas QR",
 };

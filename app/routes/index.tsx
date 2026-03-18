@@ -1,7 +1,7 @@
 import { redirect } from "react-router";
 
 export async function loader() {
-  return redirect("/glowup/login");
+  return redirect("/glowup");
 }
 
 export default function Index() {
