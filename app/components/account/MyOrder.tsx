@@ -1,108 +1,25 @@
-import { useMemo, useState, type ComponentType } from "react";
+import { useMemo, useState } from "react";
 import {
   Box,
-  CheckCircle2,
   ChevronDown,
   ChevronUp,
   Circle,
   CircleDashed,
-  Clock3,
   CreditCard,
   MapPin,
   Search,
   Truck,
-  XCircle,
 } from "lucide-react";
+import OrderDetail, {
+  formatVnd,
+  getPaymentStatusClass,
+  getSubTotal,
+  orderStatusMeta,
+  type OrderRecord,
+  type OrderDetailStatus,
+} from "../admin/orders/OrderDetail";
 
-type OrderStatus = "pending" | "shipping" | "delivered" | "canceled";
-
-type OrderItem = {
-  id: string;
-  name: string;
-  variant: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-};
-
-type OrderStep = {
-  id: string;
-  title: string;
-  time: string;
-  note: string;
-  done: boolean;
-  current?: boolean;
-};
-
-type OrderRecord = {
-  id: string;
-  placedAt: string;
-  status: OrderStatus;
-  recipient: {
-    name: string;
-    phone: string;
-    address: string;
-  };
-  payment: {
-    method: string;
-    status: string;
-  };
-  shipping: {
-    provider: string;
-    trackingCode: string;
-  };
-  summary: {
-    shippingFee: number;
-    discount: number;
-  };
-  items: OrderItem[];
-  steps: OrderStep[];
-};
-
-type FilterKey = "all" | OrderStatus;
-
-const formatVnd = (value: number) => `${value.toLocaleString("vi-VN")} đ`;
-
-const getSubTotal = (items: OrderItem[]) =>
-  items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-const getPaymentStatusClass = (status: string) => {
-  const value = status.toLowerCase();
-
-  if (value.includes("đã thanh toán")) return "text-emerald-600";
-  if (value.includes("hủy")) return "text-rose-600";
-  return "text-amber-600";
-};
-
-const statusMeta: Record<
-  OrderStatus,
-  {
-    label: string;
-    icon: ComponentType<{ className?: string }>;
-    badgeClass: string;
-  }
-> = {
-  pending: {
-    label: "Chờ xác nhận",
-    icon: Clock3,
-    badgeClass: "bg-amber-50 text-amber-700",
-  },
-  shipping: {
-    label: "Đang giao",
-    icon: Truck,
-    badgeClass: "bg-sky-50 text-sky-700",
-  },
-  delivered: {
-    label: "Đã giao",
-    icon: CheckCircle2,
-    badgeClass: "bg-emerald-50 text-emerald-700",
-  },
-  canceled: {
-    label: "Đã hủy",
-    icon: XCircle,
-    badgeClass: "bg-rose-50 text-rose-700",
-  },
-};
+type FilterKey = "all" | OrderDetailStatus;
 
 const tabs: { key: FilterKey; label: string }[] = [
   { key: "all", label: "Tất cả" },
@@ -296,6 +213,7 @@ export default function MyOrder() {
   const [expandedId, setExpandedId] = useState<string | null>(
     orderData[0]?.id ?? null
   );
+  const [detailOrder, setDetailOrder] = useState<OrderRecord | null>(null);
 
   const orders = useMemo(() => {
     const query = keyword.trim().toLowerCase();
@@ -359,7 +277,7 @@ export default function MyOrder() {
         ) : (
           orders.map((order) => {
             const isExpanded = expandedId === order.id;
-            const status = statusMeta[order.status];
+            const status = orderStatusMeta[order.status];
             const StatusIcon = status.icon;
 
             const subTotal = getSubTotal(order.items);
@@ -379,9 +297,14 @@ export default function MyOrder() {
 
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2.5">
-                        <p className="text-base font-semibold text-slate-800">
+                        {/* Click tên → mở OrderDetail modal */}
+                        <button
+                          type="button"
+                          onClick={() => setDetailOrder(order)}
+                          className="text-base font-semibold text-slate-800 transition-colors hover:text-pink-600"
+                        >
                           {order.id}
-                        </p>
+                        </button>
 
                         <span
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold ${status.badgeClass}`}
@@ -618,6 +541,13 @@ export default function MyOrder() {
           })
         )}
       </div>
+
+      {/* OrderDetail modal – click tên đơn hàng để mở */}
+      <OrderDetail
+        open={detailOrder !== null}
+        order={detailOrder}
+        onClose={() => setDetailOrder(null)}
+      />
     </section>
   );
 }

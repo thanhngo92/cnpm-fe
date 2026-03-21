@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
+import { useNavigate } from "react-router";
 
 import Loading from "../ui/loading";
 import { useCart } from "../../context/CartContext";
@@ -8,7 +9,13 @@ import type { Product } from "../../type/product";
 import ProductCard from "./ProductCard";
 import ProductDetailModal from "./ProductDetailModal";
 
-export default function ProductPage() {
+type ProductPageProps = {
+  slug?: string;
+};
+
+export default function ProductPage({ slug }: ProductPageProps) {
+  const navigate = useNavigate();
+
   const {
     categories,
     filteredProducts,
@@ -18,7 +25,8 @@ export default function ProductPage() {
     setCategoryId,
     keyword,
     setKeyword,
-  } = useProducts();
+  } = useProducts(slug);
+
   const { addItem } = useCart();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
@@ -51,10 +59,28 @@ export default function ProductPage() {
     );
   };
 
+  const handleCategoryClick = (nextCategoryId: string) => {
+    if (nextCategoryId === "all") {
+      setCategoryId("all");
+      navigate("/glowup/products");
+      return;
+    }
+
+    const selectedCategory = categories.find(
+      (category) => category.id === nextCategoryId
+    );
+
+    if (!selectedCategory) {
+      return;
+    }
+
+    setCategoryId(selectedCategory.id);
+    navigate(`/glowup/products/${selectedCategory.slug}`);
+  };
+
   return (
     <>
       <div className="relative min-h-screen overflow-hidden bg-linear-to-b from-rose-100/55 via-rose-50/40 to-pink-100/35">
-        {/* Soft radial glow effects */}
         <div className="absolute -top-40 right-0 h-80 w-80 bg-rose-200/35 blur-3xl" />
         <div className="absolute -bottom-40 left-0 h-72 w-72 bg-pink-200/25 blur-3xl" />
         <div className="absolute top-1/2 left-1/3 h-96 w-96 bg-rose-50/50 blur-3xl" />
@@ -93,7 +119,7 @@ export default function ProductPage() {
                       ? "border-pink-600 bg-pink-600 text-white shadow-(--ui-shadow-soft)"
                       : "border-rose-100 bg-white text-slate-600 hover:border-pink-200 hover:bg-white hover:text-slate-700 hover:shadow-(--ui-shadow-soft)"
                   }`}
-                  onClick={() => setCategoryId("all")}
+                  onClick={() => handleCategoryClick("all")}
                 >
                   Tất cả
                 </button>
@@ -106,7 +132,7 @@ export default function ProductPage() {
                         ? "border-pink-600 bg-pink-600 text-white shadow-(--ui-shadow-soft)"
                         : "border-rose-100 bg-white text-slate-600 hover:border-pink-200 hover:bg-white hover:text-slate-700 hover:shadow-(--ui-shadow-soft)"
                     }`}
-                    onClick={() => setCategoryId(category.id)}
+                    onClick={() => handleCategoryClick(category.id)}
                   >
                     {category.name}
                   </button>
@@ -146,6 +172,7 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
+
       {selectedProduct && (
         <ProductDetailModal
           product={selectedProduct}

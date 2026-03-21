@@ -1,27 +1,19 @@
 import { Mail, MapPin, Phone, Save, User } from "lucide-react";
-import type { TypeUser } from "../../type/auth";
+import type { User as UserType } from "../../type/user";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 
 interface ProfileProps {
-  user: TypeUser | null;
+  user: UserType | null;
 }
 
 export default function Profile({ user }: ProfileProps) {
   const displayName = user?.fullName?.trim() || "Người dùng";
   const phoneNumber = user?.phoneNumber?.trim() || "Chưa cập nhật";
   const email = user?.email?.trim() || "Chưa cập nhật";
-  const address = (
-    (user as TypeUser & { address?: string; deliveryAddress?: string })
-      ?.deliveryAddress ||
-    (user as TypeUser & { address?: string; deliveryAddress?: string })
-      ?.address ||
-    "Chưa cập nhật địa chỉ"
-  )
-    .toString()
-    .trim();
+  const address = (user?.address || "Chưa cập nhật địa chỉ").toString().trim();
 
   return (
     <section className="w-full space-y-5">

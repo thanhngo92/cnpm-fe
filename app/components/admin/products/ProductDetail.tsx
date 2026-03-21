@@ -1,51 +1,38 @@
-import { useEffect } from "react";
-import { ShoppingBag, X } from "lucide-react";
-import type { Product } from "../../type/product";
+import { X } from "lucide-react";
+import type { Product } from "../../../type/product";
 
-type ProductDetailModalProps = {
-  product: Product;
-  categoryName: string;
+type ProductDetailProps = {
+  open: boolean;
+  product: Product | null;
+  categoryName?: string;
   onClose: () => void;
-  onAddToCart: () => void;
 };
 
 function formatPrice(value?: number) {
   return `${(value ?? 0).toLocaleString("vi-VN")} đ`;
 }
 
-export default function ProductDetailModal({
+export default function ProductDetail({
+  open,
   product,
   categoryName,
   onClose,
-  onAddToCart,
-}: ProductDetailModalProps) {
-  const inStock = product.stock > 0;
-
-  useEffect(() => {
-    const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", handleEsc);
-      document.body.style.overflow = "";
-    };
-  }, [onClose]);
+}: ProductDetailProps) {
+  if (!open || !product) {
+    return null;
+  }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-3 py-4 sm:px-5 sm:py-6">
-      {/* Overlay */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-3 py-4 sm:px-6 sm:py-8">
       <button
         type="button"
-        aria-label="Đóng chi tiết sản phẩm"
-        className="absolute inset-0 bg-slate-900/30 backdrop-blur-[2px]"
+        aria-label="Close overlay"
         onClick={onClose}
+        className="absolute inset-0 bg-slate-900/30 backdrop-blur-[2px]"
       />
 
-      {/* Panel */}
-      <div className="relative z-10 flex max-h-[92dvh] w-full max-w-4xl flex-col overflow-hidden border border-rose-100 bg-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] md:flex-row">
-        {/* X */}
+      <div className="relative z-10 flex max-h-[90dvh] w-full max-w-4xl flex-col overflow-hidden border border-rose-100 bg-white shadow-[0_30px_80px_rgba(15,23,42,0.18)] md:flex-row">
+        {/* Nút X */}
         <button
           type="button"
           onClick={onClose}
@@ -54,19 +41,19 @@ export default function ProductDetailModal({
           <X className="size-4" />
         </button>
 
-        {/* Left – image */}
+        {/* Cột trái – ảnh */}
         <div className="relative shrink-0 bg-[linear-gradient(160deg,rgba(251,207,232,0.45)_0%,rgba(255,255,255,1)_70%)] md:w-[42%]">
           <div className="absolute inset-x-8 top-6 h-16 bg-rose-200/30 blur-3xl" />
-          <div className="relative flex h-52 items-center justify-center overflow-hidden p-4 sm:p-5 md:h-full">
+          <div className="relative flex h-48 items-center justify-center overflow-hidden p-4 sm:p-5 md:h-full">
             <img
               src={product.imageUrl}
               alt={product.name}
-              className="h-full max-h-[360px] w-full object-cover shadow-[0_16px_48px_rgba(15,23,42,0.12)] md:max-h-none"
+              className="h-full max-h-[340px] w-full object-cover shadow-[0_16px_48px_rgba(15,23,42,0.12)] md:max-h-none"
             />
           </div>
         </div>
 
-        {/* Right – info */}
+        {/* Cột phải – thông tin */}
         <div className="flex flex-1 flex-col overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
           {/* Badges */}
           <div className="flex flex-wrap items-center gap-2 pr-8">
@@ -78,28 +65,27 @@ export default function ProductDetailModal({
             </span>
           </div>
 
-          {/* Name */}
+          {/* Tên */}
           <h2 className="mt-3 text-2xl font-bold leading-snug tracking-tight text-slate-900 sm:text-3xl">
             {product.name}
           </h2>
 
-          {/* Price + stock badge */}
-          <div className="mt-2 flex flex-wrap items-center gap-3">
-            <p className="text-xl font-semibold tabular-nums text-rose-600">
-              {formatPrice(product.price)}
-            </p>
-          </div>
+          {/* Giá nổi bật */}
+          <p className="mt-2 text-xl font-semibold tabular-nums text-rose-600">
+            {formatPrice(product.price)}
+          </p>
 
+          {/* Divider */}
           <div className="my-4 border-t border-rose-100" />
 
-          {/* Info grid */}
+          {/* Grid thông tin */}
           <div className="grid grid-cols-2 gap-3">
             <div className="border border-rose-100 bg-rose-50/50 p-3.5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
                 Tồn kho
               </p>
               <p className="mt-1.5 text-sm font-medium text-slate-800">
-                {(product.stock ?? 0).toLocaleString("vi-VN")} sản phẩm
+                {(product.stock ?? 0).toLocaleString("vi-VN")} sp
               </p>
             </div>
 
@@ -129,23 +115,6 @@ export default function ProductDetailModal({
                 {product.description?.trim() || "-"}
               </p>
             </div>
-          </div>
-
-          {/* Add to cart */}
-          <div className="mt-5">
-            <button
-              type="button"
-              onClick={onAddToCart}
-              disabled={!inStock}
-              className={`inline-flex h-11 w-full items-center justify-center gap-2 text-sm font-semibold transition-all duration-300 ${
-                inStock
-                  ? "bg-pink-600 text-white hover:bg-pink-700"
-                  : "cursor-not-allowed bg-slate-100 text-slate-400"
-              }`}
-            >
-              <ShoppingBag className="h-4 w-4" />
-              {inStock ? "Thêm vào giỏ hàng" : "Hết hàng"}
-            </button>
           </div>
         </div>
       </div>

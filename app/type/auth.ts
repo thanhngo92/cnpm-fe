@@ -1,12 +1,4 @@
-export interface TypeUser {
-  id: string;
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  role: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import type { User } from "./user";
 
 export interface LoginRequest {
   email: string;
@@ -24,7 +16,7 @@ export interface AuthResponse {
   success: boolean;
   message: string;
   data: {
-    user: TypeUser;
+    user: User;
     token: string;
   };
 }
@@ -32,5 +24,5 @@ export interface AuthResponse {
 export interface FetchUserResponse {
   success: boolean;
   message: string;
-  data: TypeUser;
+  data: User;
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-import { loginUser } from "../services/user";
+import { loginUser } from "../services/auth";
 
 type LoginPayload = {
   email: string;

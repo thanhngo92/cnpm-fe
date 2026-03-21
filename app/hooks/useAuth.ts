@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-import { getAuthToken, getUser } from "../services/user";
-import type { TypeUser } from "../type/auth";
+import { getAuthToken } from "../services/auth";
+import { getUser } from "../services/user";
+import type { User } from "../type/user";
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [user, setUser] = useState<TypeUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 

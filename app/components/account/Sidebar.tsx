@@ -1,10 +1,10 @@
 import { User, ReceiptText, LogOut } from "lucide-react";
-import type { TypeUser } from "../../type/auth";
+import type { User as UserType } from "../../type/user";
 
 export type Tab = "profile" | "my-orders" | "history";
 
 interface SidebarProps {
-  user: TypeUser | null;
+  user: UserType | null;
   activeTab: Tab;
   setActiveTab: (tab: Tab) => void;
   onLogout: () => void;

@@ -3,11 +3,11 @@ import { X } from "lucide-react";
 import Sidebar, { type Tab } from "./Sidebar";
 import Profile from "./Profile";
 import MyOrder from "./MyOrder";
-import type { TypeUser } from "../../type/auth";
+import type { User } from "../../type/user";
 
 interface AccountModalProps {
   onClose: () => void;
-  user: TypeUser | null;
+  user: User | null;
   onLogout: () => void;
   initialTab?: Tab;
 }
@@ -46,7 +46,7 @@ export default function AccountModal({
           type="button"
           onClick={onClose}
           aria-label="Đóng"
-          className="absolute top-4 right-4 z-20 inline-flex h-9 w-9 items-center justify-center bg-white text-slate-500 transition-colors hover:bg-rose-50 hover:text-slate-700"
+          className="absolute top-4 right-4 z-20 inline-flex h-9 w-9 items-center justify-center text-slate-500 transition-colors hover:bg-rose-50 hover:text-slate-700"
         >
           <X className="h-4 w-4" />
         </button>

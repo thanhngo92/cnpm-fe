@@ -8,7 +8,7 @@ import type { Product } from "../type/product";
 const ALL_CATEGORY_ID = "all";
 type CategoryFilter = typeof ALL_CATEGORY_ID | string;
 
-export const useProducts = () => {
+export const useProducts = (slug?: string) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +24,7 @@ export const useProducts = () => {
         setLoading(true);
         setError(null);
 
-        const [products, categories] = await Promise.all([
+        const [productResponse, categoryResponse] = await Promise.all([
           getProducts(),
           getCategories(),
         ]);
@@ -33,8 +33,8 @@ export const useProducts = () => {
           return;
         }
 
-        setProducts(products);
-        setCategories(categories);
+        setProducts(productResponse);
+        setCategories(categoryResponse);
       } catch (err) {
         if (!isMounted) {
           return;
@@ -57,12 +57,40 @@ export const useProducts = () => {
     };
   }, []);
 
+  const activeCategories = useMemo(
+    () => categories.filter((category) => category.status === "active"),
+    [categories]
+  );
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    if (!slug) {
+      setCategoryId(ALL_CATEGORY_ID);
+      return;
+    }
+
+    const matchedCategory = activeCategories.find(
+      (category) => category.slug === slug
+    );
+
+    if (!matchedCategory) {
+      setCategoryId(ALL_CATEGORY_ID);
+      return;
+    }
+
+    setCategoryId(matchedCategory.id);
+  }, [slug, loading, activeCategories]);
+
   const filteredProducts = useMemo(() => {
     const normalizedKeyword = keyword.trim().toLowerCase();
 
     return products.filter((product) => {
       const matchesCategory =
         categoryId === ALL_CATEGORY_ID || product.categoryId === categoryId;
+
       const matchesQuery =
         normalizedKeyword.length === 0 ||
         product.name.toLowerCase().includes(normalizedKeyword) ||
@@ -74,7 +102,7 @@ export const useProducts = () => {
 
   return {
     products,
-    categories,
+    categories: activeCategories,
     filteredProducts,
     loading,
     error,

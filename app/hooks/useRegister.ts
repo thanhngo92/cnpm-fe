@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
-import { registerUser } from "../services/user";
+import { registerUser } from "../services/auth";
 
 type RegisterPayload = {
   fullName: string;

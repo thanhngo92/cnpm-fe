@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from "react-router";
 import Topbar from "./Topbar";
 import Footer from "./Footer";
 import { CartProvider } from "../../context/CartContext";
-import { getAuthToken } from "../../services/user";
+import { getAuthToken } from "../../services/auth";
 
 export default function MainLayout() {
   const location = useLocation();

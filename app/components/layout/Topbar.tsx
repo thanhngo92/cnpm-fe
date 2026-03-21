@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../hooks/useAuth";
 import AccountLayout from "../account/AccountLayout";
-import { logoutUser } from "../../services/user";
+import { logoutUser } from "../../services/auth";
 
 export default function Topbar() {
   const location = useLocation();
